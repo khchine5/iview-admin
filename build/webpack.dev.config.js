@@ -7,7 +7,7 @@ const webpackBaseConfig = require('./webpack.base.config.js');
 const fs = require('fs');
 const package = require('../package.json');
 
-fs.open('./env.js', 'w', function(err, fd) {
+fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "development";';
     fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
@@ -36,10 +36,10 @@ module.exports = merge(webpackBaseConfig, {
         }),
         new CopyWebpackPlugin([
             {
-                from: 'src/views/main_components/theme-switch/theme'
+                from: 'src/views/main-components/theme-switch/theme'
             },
             {
-                from: 'src/views/my_components/text-editor/tinymce'
+                from: 'src/views/my-components/text-editor/tinymce'
             }
         ], {
             ignore: [

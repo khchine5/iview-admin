@@ -66,13 +66,13 @@
     </div>
 </template>
 <script>
-    import shrinkableMenu from './main_components/shrinkable-menu/shrinkable-menu.vue';
-    import tagsPageOpened from './main_components/tagsPageOpened.vue';
-    import breadcrumbNav from './main_components/breadcrumbNav.vue';
-    import fullScreen from './main_components/fullScreen.vue';
-    import lockScreen from './main_components/lockscreen/lockscreen.vue';
-    import messageTip from './main_components/message-tip.vue';
-    import themeSwitch from './main_components/theme-switch/themeSwitch.vue';
+    import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
+    import tagsPageOpened from './main-components/tags-page-opened.vue';
+    import breadcrumbNav from './main-components/breadcrumb-nav.vue';
+    import fullScreen from './main-components/fullscreen.vue';
+    import lockScreen from './main-components/lockscreen/lockscreen.vue';
+    import messageTip from './main-components/message-tip.vue';
+    import themeSwitch from './main-components/theme-switch/theme-switch.vue';
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
     
@@ -90,7 +90,6 @@
             return {
                 shrink: false,
                 userName: '',
-                mesCount: 3,
                 isFullScreen: false,
                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr
             };
@@ -116,11 +115,15 @@
             },
             menuTheme () {
                 return this.$store.state.app.menuTheme;
+            },
+            mesCount () {
+                return this.$store.state.app.messageCount;
             }
         },
         methods: {
             init () {
                 let pathArr = util.setCurrentPath(this, this.$route.name);
+                this.$store.commit('updateMenulist');
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
@@ -128,6 +131,7 @@
                 let messageCount = 3;
                 this.messageCount = messageCount.toString();
                 this.checkTag(this.$route.name);
+                this.$store.commit('setMessageCount', 3);
             },
             toggleClick () {
                 this.shrink = !this.shrink;
@@ -161,11 +165,12 @@
                 // console.log(val)
             },
             beforePush (name) {
-                if (name === 'accesstest_index') {
-                    return false;
-                } else {
-                    return true;
-                }
+                // if (name === 'accesstest_index') {
+                //     return false;
+                // } else {
+                //     return true;
+                // }
+                return true;
             },
             fullscreenChange (isFullScreen) {
                 // console.log(isFullScreen);
