@@ -14,8 +14,8 @@ util.title = function (title) {
 const ajaxUrl = env === 'development'
     ? 'http://127.0.0.1:8888'
     : env === 'production'
-    ? 'https://www.url.com'
-    : 'https://debug.url.com';
+        ? 'https://www.url.com'
+        : 'https://debug.url.com';
 
 util.ajax = axios.create({
     baseURL: ajaxUrl,
@@ -24,7 +24,7 @@ util.ajax = axios.create({
 
 util.inOf = function (arr, targetArr) {
     let res = true;
-    arr.map(item => {
+    arr.forEach(item => {
         if (targetArr.indexOf(item) < 0) {
             res = false;
         }
@@ -190,7 +190,7 @@ util.openNewPage = function (vm, name, argu, query) {
     let i = 0;
     let tagHasOpened = false;
     while (i < openedPageLen) {
-        if (name === pageOpenedList[i].name) {  // 页面已经打开
+        if (name === pageOpenedList[i].name) { // 页面已经打开
             vm.$store.commit('pageOpenedList', {
                 index: i,
                 argu: argu,
